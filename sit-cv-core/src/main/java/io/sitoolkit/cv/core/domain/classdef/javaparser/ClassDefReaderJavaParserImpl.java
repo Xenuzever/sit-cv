@@ -114,7 +114,11 @@ public class ClassDefReaderJavaParserImpl implements ClassDefReader {
       classDef.setSourceId(javaFile.toFile().getAbsolutePath());
       String typeName = compilationUnit.getPrimaryTypeName().get();
       classDef.setName(typeName);
-      classDef.setPkg(compilationUnit.getPackageDeclaration().get().getNameAsString());
+      if (compilationUnit.getPackageDeclaration().isPresent()) {
+        classDef.setPkg(compilationUnit.getPackageDeclaration().get().getNameAsString());
+      } else {
+        classDef.setPkg("");
+      }
 
       compilationUnit
           .getClassByName(typeName)
