@@ -28,6 +28,7 @@ public class CvConfig {
   @JsonMerge private List<LifelineClasses> lifelines = new ArrayList<>();
   private EnclosureFilterCondition sqlLogPattern;
   @JsonMerge private List<String> asyncAnnotations = new ArrayList<>();
+  @JsonMerge private List<String> mvnTestArgs = new ArrayList<>();
 
   @JsonIgnore
   @Setter(AccessLevel.NONE)

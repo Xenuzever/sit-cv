@@ -7,6 +7,8 @@ import io.sitoolkit.cv.core.infra.config.CvConfig;
 import io.sitoolkit.cv.core.infra.project.SitCvToolsManager;
 import io.sitoolkit.util.buildtoolhelper.maven.MavenProject;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +50,13 @@ public class MavenProjectReader implements ProjectReader {
         agentJar,
         project,
         (String agentParam) -> {
-          return mvnPrj.mvnw("test", "-B", "-DargLine=" + agentParam);
+
+          List<String> args = new ArrayList<>();
+          args.addAll(List.of("test", "-B"));
+          args.addAll(sitCvConfig.getMvnTestArgs());
+          args.add("-DargLine=" + agentParam);
+
+          return mvnPrj.mvnw(args.toArray(String[]::new));
         });
     return true;
   }
